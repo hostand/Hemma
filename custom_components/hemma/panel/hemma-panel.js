@@ -794,8 +794,9 @@ function storeLabels(built) {
 }
 function expandConfig(a, b, c, d) { return storeLabels(expandConfig0(a, b, c, d)); }
 function expandMobileConfig(a, b, c, d, e) { return storeLabels(expandMobileConfig0(a, b, c, d, e)); }
-function extractConfig(l) { return extractConfig0(restoreLabels(l)); }
-function extractMobileConfig(l) { return extractMobileConfig0(restoreLabels(l)); }
+// restoreLabels edits tiles in place, so it works on a copy: the caller compares the file it loaded with the rebuilt one.
+function extractConfig(l) { return extractConfig0(restoreLabels(clone(l))); }
+function extractMobileConfig(l) { return extractMobileConfig0(restoreLabels(clone(l))); }
 
 function extractAny(lovelace) {
   return isMobileConfig(lovelace) ? extractMobileConfig(lovelace) : extractConfig(lovelace);
